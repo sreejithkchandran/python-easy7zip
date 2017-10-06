@@ -16,8 +16,8 @@ __copyright__ = " Copyright 2017,SREEJITH KOVILAKATHUVEETTIL CHANDRAN"
 __email__ = "sreeju_kc@hotmail.com"
 __license__ = "Apache License 2.0"
 __last_modification__ = '2017.10.06'
-
-"""The intention of this module is to provide an easy and handy way to create, extract,update, delete,hash value and list the 7zip files."""
+'''This is a Windows 7zip module for Python 2.7'''
+"""The intention of this module is to provide an easy and handy way to create, extract, update, delete, hash value and list the 7zip files."""
 """This module will only work on Python 2.7 (Windows paltform) and the only prerequisite is to install 7zip program in one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)"""
 
 class easy7zip(object):
@@ -85,7 +85,7 @@ class easy7zip(object):
     def ExtractFromArch(self,zipfile,foldertoextract,passwd=None):
         ''' This function will extract a 7z archive file to a destination folder .
             This function takes 3 arguments,1st argument take the file (with full path) name of the source archive file you are about to  extract for example "C:\dir\file.7z".
-            2nd argument is full path of your destination folder for your extracted files, for example ìC:\destinationî.
+            2nd argument is full path of your destination folder for your extracted files, for example ‚ÄúC:\destination‚Äù.
             3rd argument is optional for passwords, if the archive file is password protected then you can give your password there, otherwise leave it blank.
             If the overall operation is successful this function will return a Boolean True value.'''
         path =  self.path
@@ -125,7 +125,7 @@ class easy7zip(object):
     def UpdateToArch(self,archfile,filetoupdate,passwd=None):
         ''' This function will update an existing 7z archive file
             This function takes 3 arguments,1st argument take the file (with full path) name of the source archive file you want to get updated, for example "C:\dir\file.7z".
-            2nd argument is full path of your destination file you want to add it to the archive, for example ìC:\destination\file.txtî.
+            2nd argument is full path of your destination file you want to add it to the archive, for example ‚ÄúC:\destination\file.txt‚Äù.
             3rd argument is optional , if you want the archive file  password protected then you can give your password there, otherwise leave it blank.
             If the overall operation is successful this function will return a Boolean True value.'''
         path =  self.path
@@ -168,7 +168,7 @@ class easy7zip(object):
         ''' This function will delete a file from 7z archive file
             This function takes 2 arguments
             1st argument take the file (with full path) name of the source archive file from where you want to delete a file, for example "C:\dir\file.7z".
-            2nd argument is the name of the file  you want to get deleted from the archive, for example ìfile.txtî. 
+            2nd argument is the name of the file  you want to get deleted from the archive, for example ‚Äúfile.txt‚Äù. 
             If the overall operation is successful this function will return a Boolean True value.'''
         path =  self.path
         path.encode('string_escape')

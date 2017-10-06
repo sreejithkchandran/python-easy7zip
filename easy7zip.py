@@ -6,7 +6,7 @@ import time
 import re
 
 if sys.version_info[0] != 2:
-	raise Exception("This module required  Python version 2.7")
+	raise Exception("This module requires Python version 2.7")
 
 __author__ = 'Sreejith KOVILAKATHUVEETTIL CHANDRAN'
 __version__ = '0.0.1'

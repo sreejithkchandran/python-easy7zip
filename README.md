@@ -3,7 +3,7 @@ easy7zip
 
 easy7zip is a python library which helps to create,delete,update,extract 7zip archive from Python 2.7 (Windows platform only).
 It is very easy and handy to use from a python program.
-7zip support AES 256 encryption so this can be very useful security folks.
+7zip support AES 256 encryption so this can be very useful for security folks.
 The only prerequisite  for this module is a preinstalled 7zip program in either C:\ or C:\Program Files.
 This module is available via pip install, please use pip2.7 to install easy7zip module.
 

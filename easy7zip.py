@@ -7,7 +7,7 @@ import re
 
 
 if sys.platform != 'win32':
-        raise Exception("This is a Windows 7zip module for Python 2.7")
+        raise Exception("This is a Windows 7-Zip module for Python 2.7")
 if sys.version_info[0] != 2:
 	raise Exception("This module requires  Python version 2.7")
 __author__ = 'Sreejith KOVILAKATHUVEETTIL CHANDRAN'
@@ -16,15 +16,15 @@ __copyright__ = " Copyright 2017,SREEJITH KOVILAKATHUVEETTIL CHANDRAN"
 __email__ = "sreeju_kc@hotmail.com"
 __license__ = "Apache License 2.0"
 __last_modification__ = '2017.10.06'
-'''This is a Windows 7zip module for Python 2.7'''
-"""The intention of this module is to provide an easy and handy way to create, extract, update, delete, hash value and list the 7-zip files."""
-"""This module will only work on Python 2.7 (Windows paltform) and the only prerequisite is to install 7-zip program in one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)"""
+'''This is a Windows 7-Zip module for Python 2.7'''
+"""The intention of this module is to provide an easy and handy way to create, extract, update, delete, hash value and list the 7-Zip files."""
+"""This module will only work on Python 2.7 (Windows paltform) and the only prerequisite is to install 7-Zip program in one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)"""
 
 class easy7zip(object):
     def __init__(self,path = ""):
         ''' This  module is only for Windows and it works on Python 2.7.
-            This required 7-zip program to be installed on your machine 
-            Please make sure that 7-zip program is installed on one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)'''
+            This required 7-Zip program to be installed on your machine 
+            Please make sure that 7-Zip program is installed on one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)'''
         folders = ["C:\\7Zip","C:\\Program Files","C:\\Program Files (x86)"]
         lookfor = "7za.exe"
         for pa in folders:
@@ -38,9 +38,9 @@ class easy7zip(object):
             else:
                 continue
         if not path:
-            raise Exception ("Please download and install 7zip from 'http://www.7-zip.org/' and try again, please make sure to install it either C drive or C:\Program Files ")
+            raise Exception ("Please download and install 7-Zip from 'http://www.7-zip.org/' and try again, please make sure to install it either C drive or C:\Program Files ")
     def AddToArch(self,zipfilename,filetoadd,passwd=None):
-        ''' This function will create a 7-zip archive file either with or without a password
+        ''' This function will create a 7-Zip archive file either with or without a password
             This function takes 3 arguments, 1st argument take the file (with full path) name of intended archive file you are about to create for example "C:\dir\file", this will create a file.7z file in the C:\dir directory.
             2nd argument is full path of your source file, you can either give one file or give * for all files in the folder.
             3rd argument is optional for passwords, if 3rd argument is empty, it will create an archive without a password, if you need to create an archive  with password then provide the password in the 3rd argument.
@@ -79,11 +79,11 @@ class easy7zip(object):
         if """Everything is Ok""" in out:
             return True
         elif "The process cannot access the file because it is being used by another process" in out:
-            raise Exception ("It seems 7-zip file is already exists and opend by another process, please close the 7-zip file and try again")
+            raise Exception ("It seems 7-Zip file is already exists and opend by another process, please close the 7-Zip file and try again")
         else:
-            raise Exception ("Some error while creating 7-zip file, make sure file and directory are valid" +'\n'+out)
+            raise Exception ("Some error while creating 7-Zip file, make sure file and directory are valid" +'\n'+out)
     def ExtractFromArch(self,zipfile,foldertoextract,passwd=None):
-        ''' This function will extract a 7-zip archive file to a destination folder .
+        ''' This function will extract a 7-Zip archive file to a destination folder .
             This function takes 3 arguments,1st argument take the file (with full path) name of the source archive file you are about to  extract for example "C:\dir\file.7z".
             2nd argument is full path of your destination folder for your extracted files, for example “C:\destination”.
             3rd argument is optional for passwords, if the archive file is password protected then you can give your password there, otherwise leave it blank.
@@ -121,7 +121,7 @@ class easy7zip(object):
         elif "Scanning the drive for archives:" in out:
              raise Exception ("Either 7z file or destination folder is not valid, please try again "+'\n'+'\n'+'\n'+out) 
         else:
-             raise Exception ("Some error while extracting 7-zip file " +'\n'+out)
+             raise Exception ("Some error while extracting 7-Zip file " +'\n'+out)
     def UpdateToArch(self,archfile,filetoupdate,passwd=None):
         ''' This function will update an existing 7z archive file
             This function takes 3 arguments,1st argument take the file (with full path) name of the source archive file you want to get updated, for example "C:\dir\file.7z".
@@ -162,7 +162,7 @@ class easy7zip(object):
         elif "cannot delete the file" in out:
             raise Exception ("Please make sure to close the 7z file before updating")
         else:
-            raise Exception ("Some error while updating 7-zip file " +'\n'+out)
+            raise Exception ("Some error while updating 7-Zip file " +'\n'+out)
 
     def DeleteFromArch(self,archfile,filetodelete):
         ''' This function will delete a file from 7z archive file
@@ -199,7 +199,7 @@ class easy7zip(object):
             
     def HashValue(self,zfile):
         
-        ''' This function will Calculate hash values for files.
+        ''' This function will Calculate hash values (CRC32) for files.
             This function takes only one argument, full path of 7z file and return a hash value'''
         path =  self.path
         path.encode('string_escape')

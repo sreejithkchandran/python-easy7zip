@@ -1,11 +1,11 @@
-easy7zip
+python-easy7zip
 ===========
 
-easy7zip is a python module which helps to create, delete, update, extract 7-Zip archive from Python 2.7 (Windows platform only).
+python-easy7zip is a python module which helps to create, delete, update, extract 7-Zip archive from Python 2.7 (Windows platform only).
 It is very easy and handy to use from a python program.
 7-Zip supports AES encryption so this can be very useful for security folks.
 The only prerequisite  for this module is a preinstalled 7-Zip program in either C:\ or C:\Program Files.
-This module is available via pip install, please use pip2.7 to install the easy7zip module.
+This module is available via pip install, please use pip2.7 to install the python-easy7zip module.
 
 Typical usage looks like:
 

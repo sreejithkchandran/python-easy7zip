@@ -29,7 +29,7 @@ Typical usage looks like:
 
     True
 
->>> test.ExtractFromArch("D:\ZipTest\test","D:\ZipTest\extra","test")               #Extract file to "extra" folder, password security key as some of the files are password protected, leave it blank if none.Return a boolean True if operation is successful.
+>>> test.ExtractFromArch("D:\ZipTest\test","D:\ZipTest\extra","test")               #Extract file to "extra" folder, 'test' is the security key as some of the files are password protected, leave it blank if none.Return a boolean True if operation is successful.
 
     True
 

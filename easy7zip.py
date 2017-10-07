@@ -15,7 +15,7 @@ __version__ = '0.0.2'
 __copyright__ = " Copyright 2017,SREEJITH KOVILAKATHUVEETTIL CHANDRAN"
 __email__ = "sreeju_kc@hotmail.com"
 __license__ = "Apache License 2.0"
-__last_modification__ = '2017.10.06'
+__last_modification__ = '2017.10.07'
 '''This is a Windows 7-Zip module for Python 2.7'''
 """The intention of this module is to provide an easy and handy way to create, extract, update, delete, hash value and list the 7-Zip files."""
 """This module will only work on Python 2.7 (Windows paltform) and the only prerequisite is to install 7-Zip program in one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)"""

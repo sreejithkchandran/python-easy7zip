@@ -47,4 +47,4 @@ Typical usage looks like:
 
 >>> test.ListFiles("D:\ZipTest\test")
 
-    [' test2.txt', ' test3.txt', ' test1.csv', ' test.csv']
+   [' test2.txt', ' test3.txt', ' test1.csv', ' test.csv']

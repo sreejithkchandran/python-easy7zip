@@ -21,11 +21,12 @@ __last_modification__ = '2017.10.07'
 """This module will only work on Python 2.7 (Windows paltform) and the only prerequisite is to install 7-Zip program in one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)"""
 
 class easy7zip(object):
-    def __init__(self,path = ""):
+    def __init__(self):
         ''' This  module is only for Windows and it works on Python 2.7.
             This required 7-Zip program to be installed on your machine 
             Please make sure that 7-Zip program is installed on one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)'''
-        folders = ["C:\\7Zip","C:\\Program Files","C:\\Program Files (x86)"]
+        path = ""
+	folders = ["C:\\7Zip","C:\\Program Files","C:\\Program Files (x86)"]
         lookfor = "7za.exe"
         for pa in folders:
             for root, dirs, files in os.walk(pa):

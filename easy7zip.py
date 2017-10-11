@@ -11,12 +11,13 @@ if sys.platform != 'win32':
 if sys.version_info[0] != 2:
 	raise Exception("This module requires  Python version 2.7")
 __author__ = 'Sreejith KOVILAKATHUVEETTIL CHANDRAN'
-__version__ = '0.0.2'
+__version__ = '0.0.8'
 __copyright__ = " Copyright 2017,SREEJITH KOVILAKATHUVEETTIL CHANDRAN"
 __email__ = "sreeju_kc@hotmail.com"
 __license__ = "Apache License 2.0"
-__last_modification__ = '2017.10.07'
-'''This is a Windows 7-Zip module for Python 2.7'''
+__last_modification__ = '2017.10.08'
+
+"""This is a Windows 7-Zip module for Python 2.7"""
 """The intention of this module is to provide an easy and handy way to create, extract, update, delete, hash value and list the 7-Zip files."""
 """This module will only work on Python 2.7 (Windows paltform) and the only prerequisite is to install 7-Zip program in one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)"""
 
@@ -26,7 +27,7 @@ class easy7zip(object):
             This required 7-Zip program to be installed on your machine 
             Please make sure that 7-Zip program is installed on one of the following locations "C:\7Zip","C:\Program Files","C:\Program Files (x86)'''
         path = ""
-	folders = ["C:\\7Zip","C:\\Program Files","C:\\Program Files (x86)"]
+        folders = ["C:\\7Zip","C:\\Program Files","C:\\Program Files (x86)"]
         lookfor = "7za.exe"
         for pa in folders:
             for root, dirs, files in os.walk(pa):
@@ -46,22 +47,21 @@ class easy7zip(object):
             2nd argument is full path of your source file, you can either give one file or give * for all files in the folder.
             3rd argument is optional for passwords, if 3rd argument is empty, it will create an archive without a password, if you need to create an archive  with password then provide the password in the 3rd argument.
             If the overall operation is successful this function will return a Boolean True value.'''
-            
         path =  self.path
         path.encode('string_escape')
-        if not zipfilename.endswith(".7z"):
-            zipfilename = zipfilename+".7z"
+        if not zipfilename.endswith(('.7z','.zip','.gz')):
+                raise Exception("Please provide the file extention .7z,.zip or .gz")
         filetoadd = '"{}"'.format(filetoadd)
-        filetoadd = filetoadd.encode('string-escape')
-        zipfilename = zipfilename.encode('string-escape')
         tempar = zipfilename+".tmp"
         zipfilename = '"{}"'.format(zipfilename)
+        zipfilenames = pathes(zipfilename)
+        filetoadds = pathes(filetoadd)   
         if os.path.exists(tempar):
             os.remove(tempar)
         out = ""
         if passwd==None:
             try: 
-                cmd = path+"\\7za.exe a -t7z "+"-mx9 "+zipfilename+' '+filetoadd
+                cmd = path+"\\7za.exe a -t7z "+"-mx9 "+zipfilenames+' '+filetoadds
                 si = subprocess.STARTUPINFO()
                 si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
@@ -70,7 +70,7 @@ class easy7zip(object):
                 print (e.message, e.args)
         else:
             try: 
-                cmd = path+"\\7za.exe a -t7z -p"+passwd+" -mx9 "+ zipfilename+' '+filetoadd
+                cmd = path+"\\7za.exe a -t7z -p"+passwd+" -mx9 "+ zipfilenames+' '+filetoadds
                 si = subprocess.STARTUPINFO()
                 si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
@@ -80,26 +80,26 @@ class easy7zip(object):
         if """Everything is Ok""" in out:
             return True
         elif "The process cannot access the file because it is being used by another process" in out:
-            raise Exception ("It seems 7-Zip file is already exists and opend by another process, please close the 7-Zip file and try again")
+            raise Exception ("It seems 7-Zip file is already exists and opend by another process, please close the zip file and try again")
         else:
-            raise Exception ("Some error while creating 7-Zip file, make sure file and directory are valid" +'\n'+out)
+            raise Exception ("Some error while creating Zip file, make sure file and directory are valid" +'\n'+out)
     def ExtractFromArch(self,zipfile,foldertoextract,passwd=None):
         ''' This function will extract a 7-Zip archive file to a destination folder .
             This function takes 3 arguments,1st argument take the file (with full path) name of the source archive file you are about to  extract for example "C:\dir\file.7z".
-            2nd argument is full path of your destination folder for your extracted files, for example ‚ÄúC:\destination‚Äù.
+            2nd argument is full path of your destination folder for your extracted files, for example ìC:\destinationî.
             3rd argument is optional for passwords, if the archive file is password protected then you can give your password there, otherwise leave it blank.
             If the overall operation is successful this function will return a Boolean True value.'''
         path =  self.path
         path.encode('string_escape')
-        if not zipfile.endswith(".7z"):
-            zipfile = zipfile+".7z"
+        if not zipfile.endswith(('.7z','.zip','.gz')):
+                raise Exception("Please provide the file extention .7z,.zip or .gz")
         zipfile = '"{}"'.format(zipfile)
-        zipfile = zipfile.encode('string-escape')
         foldertoextract = '"{}"'.format(foldertoextract)
-        foldertoextract = foldertoextract.encode('string-escape')
+        zipfiles = pathes(zipfile)
+        foldertoextracts = pathes(foldertoextract)  
         if passwd==None:
             try:
-                cmd = path+"\\7za.exe x -aos "+zipfile+' '+"-o"+foldertoextract
+                cmd = path+"\\7za.exe x -aos "+zipfiles+' '+"-o"+foldertoextracts
                 si = subprocess.STARTUPINFO()
                 si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
@@ -108,7 +108,7 @@ class easy7zip(object):
                 print (e.message, e.args)
         else:
             try:
-                cmd = path+"\\7za.exe x -aos "+zipfile+' '+"-o"+foldertoextract+" -p"+passwd
+                cmd = path+"\\7za.exe x -aos "+zipfiles+' '+"-o"+foldertoextracts+" -p"+passwd
                 si = subprocess.STARTUPINFO()
                 si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
@@ -124,25 +124,26 @@ class easy7zip(object):
         else:
              raise Exception ("Some error while extracting 7-Zip file " +'\n'+out)
     def UpdateToArch(self,archfile,filetoupdate,passwd=None):
-        ''' This function will update an existing 7z archive file
+            
+        '''This function will update an existing 7z archive file
             This function takes 3 arguments,1st argument take the file (with full path) name of the source archive file you want to get updated, for example "C:\dir\file.7z".
-            2nd argument is full path of your destination file you want to add it to the archive, for example ‚ÄúC:\destination\file.txt‚Äù.
-            3rd argument is optional , if you want the archive file  password protected then you can give your password there, otherwise leave it blank.
+            2nd argument is full path of your destination file you want to add it to the archive, for example ìC:\destination\file.txtî.
+            3rd argument is optional, if you want the archive file  password protected then you can give your password there, otherwise leave it blank.
             If the overall operation is successful this function will return a Boolean True value.'''
         path =  self.path
         path.encode('string_escape')
-        if not archfile.endswith(".7z"):
-            archfile = archfile+".7z"
-        archfile = archfile.encode('string-escape')
+        if not archfile.endswith(('.7z','.zip','.gz')):
+                raise Exception("Please provide the file extention .7z,.zip or .gz")
         tempar = archfile+".tmp"
         archfile = '"{}"'.format(archfile)
         if os.path.exists(tempar):
             os.remove(tempar)
         filetoupdate = '"{}"'.format(filetoupdate)
-        filetoupdate = filetoupdate.encode('string-escape')
+        archfiles = pathes(archfile)
+        filetoupdates = pathes(filetoupdate) 
         if passwd==None:
             try:
-                cmd = path+"\\7za.exe u -aos "+archfile+' '+filetoupdate
+                cmd = path+"\\7za.exe u -aos "+archfiles+' '+filetoupdates
                 si = subprocess.STARTUPINFO()
                 si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
@@ -151,7 +152,7 @@ class easy7zip(object):
                 print (e.message, e.args)
         else:
             try:
-                cmd = path+"\\7za.exe u -aos "+archfile+' '+filetoupdate+" -mx9 -p"+passwd
+                cmd = path+"\\7za.exe u -aos "+archfiles+' '+filetoupdates+" -mx9 -p"+passwd
                 si = subprocess.STARTUPINFO()
                 si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
@@ -163,27 +164,27 @@ class easy7zip(object):
         elif "cannot delete the file" in out:
             raise Exception ("Please make sure to close the 7z file before updating")
         else:
-            raise Exception ("Some error while updating 7-Zip file " +'\n'+out)
+            raise Exception ("Some error while updating Zip file " +'\n'+out)
 
     def DeleteFromArch(self,archfile,filetodelete):
         ''' This function will delete a file from 7z archive file
             This function takes 2 arguments
             1st argument takes the file (with full path) name of the source archive file from where you want to delete a file, for example "C:\dir\file.7z".
-            2nd argument is the name of the file you want to get deleted from the archive, for example ‚Äúfile.txt‚Äù. 
+            2nd argument is the name of the file you want to get deleted from the archive, for example ìfile.txtî. 
             If the overall operation is successful this function will return a Boolean True value.'''
         path =  self.path
         path.encode('string_escape')
-        if not archfile.endswith(".7z"):
-            archfile = archfile+".7z"
-        archfile = archfile.encode('string-escape')
+        if not archfile.endswith(('.7z','.zip','.gz')):
+            raise Exception("Please provide the file extention .7z,.zip or .gz")
         tempar = archfile+".tmp"
         archfile = '"{}"'.format(archfile)
         if os.path.exists(tempar):
             os.remove(tempar)
         filetodelete = '"{}"'.format(filetodelete)
-        filetodelete = filetodelete.encode('string-escape')
+        archfiles = pathes(archfile)
+        filetodeletes = pathes(filetodelete)
         try:
-            cmd = path+"\\7za.exe d "+archfile+' '+filetodelete
+            cmd = path+"\\7za.exe d "+archfiles+' '+filetodeletes
             si = subprocess.STARTUPINFO()
             si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
@@ -200,40 +201,42 @@ class easy7zip(object):
             
     def HashValue(self,zfile):
         
-        ''' This function will Calculate hash values (CRC32) for files.
+         ''' This function will Calculate hash values (CRC32) for files.
             This function takes only one argument, full path of 7z file and return a hash value'''
-        path =  self.path
-        path.encode('string_escape')
-        if not zfile.endswith(".7z"):
-            zfile = zfile+".7z"
-        zfile = '"{}"'.format(zfile)
-        zfile = zfile.encode('string-escape')
-        try:
-            cmd = path+"\\7za.exe h "+zfile
-            si = subprocess.STARTUPINFO()
-            si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
-            out, err = p.communicate()
-        except Exception as e:
-            print (e.message, e.args)
-        if """Everything is Ok""" in out:
-            hashv = re.search("CRC32  for data:\s+(.*)", out).group(1)
-            hashv = hashv.rstrip('\r')
-            return hashv
-        else:
-            raise Exception ("Some error in calculating hash value of the file " +'\n'+out)
+         
+         path =  self.path
+         path.encode('string_escape')
+         if not zfile.endswith(('.7z','.zip','.gz')):
+             raise Exception("Please provide the file extention .7z,.zip or .gz")
+         zfile = '"{}"'.format(zfile)
+         zfiles = pathes(zfile)
+         try:
+             cmd = path+"\\7za.exe h "+zfiles
+             si = subprocess.STARTUPINFO()
+             si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+             p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
+             out, err = p.communicate()
+         except Exception as e:
+             print (e.message, e.args)
+         if """Everything is Ok""" in out:
+             hashv = re.search("CRC32  for data:\s+(.*)", out).group(1)
+             hashv = hashv.rstrip('\r')
+             return hashv
+         else:
+             raise Exception ("Some error in calculating hash value of the file " +'\n'+out)
     def ListFiles(self,zfile):
         
         ''' This function will list all the files inside a 7z archive file .
-            This function takes only one argument, full path of 7z file and return a list with files'''
+            This function take only one argument, full path of 7z file and return a list with files'''
         path =  self.path
         path.encode('string_escape')
-        if not zfile.endswith(".7z"):
-            zfile = zfile+".7z"
+        if not zfile.endswith(('.7z','.zip','.gz')):
+            raise Exception("Please provide the file extention .7z,.zip or .gz")
         zfile = '"{}"'.format(zfile)
-        zfile = zfile.encode('string-escape')
+        zfiles = pathes(zfile)
         try:
-            cmd = path+"\\7za.exe l "+zfile
+            cmd = path+"\\7za.exe l "+zfiles
+            print cmd
             si = subprocess.STARTUPINFO()
             si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,startupinfo=si)
@@ -248,3 +251,10 @@ class easy7zip(object):
         else:
             raise Exception ("Some error in listing file " +'\n'+out)
 
+def pathes(takepath):
+        backslash = { '\a': r'\a', '\b': r'\b', '\f': r'\f', 
+                  '\n': r'\n', '\r': r'\r', '\t': r'\t', '\v': r'\v' }
+        for key, value in backslash.items():
+                takepath = takepath.replace(key, value)
+        return takepath
+                            
